@@ -99,6 +99,8 @@ public class guestParkingController implements Initializable {
 			String vehicleTypeSelected = this.vType.getSelectionModel().getSelectedItem();
 			int hours = Integer.parseInt(hoursTF.getText());
 			Long phone = Long.parseLong(phoneTF.getText());
+			
+			System.out.print("Commit");
 
 			boolean isValid = isValidEmail(email);
 
