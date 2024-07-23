@@ -1,13 +1,13 @@
 package model;
 
 public class Guest {
-    private String id;
+    private int id;
     private String name;
     private String email;
     private Long phone;
     private String address;
 
-    public Guest(String id, String name, String email, Long phone2, String address) {
+    public Guest(int id, String name, String email, Long phone2, String address) {
         this.id = id;
         this.name = name;
         this.email = email;
@@ -16,11 +16,11 @@ public class Guest {
     }
 
     // Getters and setters for each field
-    public String getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 
