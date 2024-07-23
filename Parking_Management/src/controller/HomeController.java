@@ -52,6 +52,7 @@ public class HomeController {
 	void parkAsGuestBtn(ActionEvent event) throws IOException {
 		System.out.print("Park as Guest Button Clicked\n");
 		SceneUtils.setScene(event, "/view/GuestParking.fxml");
+		
 		//SceneUtils.setScene(event, "/view/Payment.fxml");
 
 	}
