@@ -138,10 +138,15 @@ public class guestParkingController implements Initializable {
 				//DB
 				boolean p = da.insertPass(pass);
 				
-				//TODO: Payment Gateway 
+				//TODO: Payment Gateway (Logic)
+				SceneUtils.setScene(event, "/view/Payment.fxml");
+				
+				
+				
+				
 				
 				//Pass Confirmed Screen 
-				SceneUtils.setScene(event, "/view/PassConfirmed.fxml");
+				//SceneUtils.setScene(event, "/view/PassConfirmed.fxml");
 				
 			}
 
