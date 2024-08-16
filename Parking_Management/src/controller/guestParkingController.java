@@ -134,11 +134,12 @@ public class guestParkingController implements Initializable {
 				
 				LocalDateTime startDateTime = LocalDateTime.now();
 				//Pass
+				
 				Pass pass = new Pass(id, startDateTime, hours,subtotal, tax,total);
 				//DB
 				boolean p = da.insertPass(pass);
 				
-				//TODO: Payment Gateway (Logic)
+				//Payment Screen
 				SceneUtils.setScene(event, "/view/Payment.fxml");
 				
 				

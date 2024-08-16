@@ -5,7 +5,6 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="534.0" prefWidth="795.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.HomeController">
    <children>
       <Label layoutX="39.0" layoutY="21.0" text="Parking Spots">
@@ -13,9 +12,7 @@
             <Font size="24.0" />
          </font>
       </Label>
-      <Button fx:id="parkAsGuestBtn" layoutX="346.0" layoutY="66.0" mnemonicParsing="false" onAction="#parkAsGuestBtn" text="Park as Guest" />
-      <Button fx:id="membershipBtn" layoutX="346.0" layoutY="128.0" mnemonicParsing="false" onAction="#membershipBtn" text="Membership Holders" />
-      <Button fx:id="becomeMemberBtn" layoutX="346.0" layoutY="186.0" mnemonicParsing="false" onAction="#becomeMemberBtn" text="Become a Member" />
-      <Button fx:id="adminBtn" layoutX="346.0" layoutY="242.0" mnemonicParsing="false" onAction="#adminBtn" text="Admin Panel" />
+      <Button fx:id="parkAsGuestBtn" layoutX="334.0" layoutY="229.0" mnemonicParsing="false" onAction="#parkAsGuestBtn" text="Park as Guest" />
+      <Button fx:id="adminBtn" layoutX="39.0" layoutY="470.0" mnemonicParsing="false" onAction="#adminBtn" text="Admin Panel" />
    </children>
 </AnchorPane>

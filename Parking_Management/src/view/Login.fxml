@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane prefHeight="204.0" prefWidth="448.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/22" fx:controller="controller.loginController">
+   <children>
+      <Label layoutX="158.0" layoutY="14.0" text="Admin Panel" underline="true">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+      <Label layoutX="42.0" layoutY="66.0" text="Username/Email:" />
+      <Label layoutX="42.0" layoutY="110.0" text="Password:" />
+      <Button layoutX="363.0" layoutY="158.0" mnemonicParsing="false" onAction="#loginBtnClicked" prefHeight="26.0" prefWidth="60.0" text="Login" />
+      <Button layoutX="285.0" layoutY="159.0" mnemonicParsing="false" onAction="#goBackBtnClicked" text="Go back" />
+      <TextField fx:id="userNameTF" layoutX="140.0" layoutY="62.0" prefHeight="26.0" prefWidth="202.0" />
+      <PasswordField fx:id="passwordTF" layoutX="140.0" layoutY="106.0" prefHeight="26.0" prefWidth="202.0" />
+   </children>
+</AnchorPane>

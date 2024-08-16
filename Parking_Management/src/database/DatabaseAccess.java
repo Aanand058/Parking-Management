@@ -5,6 +5,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
+import model.Card;
 import model.Guest;
 import model.Pass;
 import model.Vehicle;
@@ -107,6 +108,18 @@ public class DatabaseAccess {
 			e.printStackTrace();
 		}
 
+		return false;
+	}
+
+	public boolean insertCard(Card card) throws SQLException {
+		
+		
+		
+		
+		
+		
+		
+		
 		return false;
 	}
 

@@ -4,6 +4,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 import Utility.AlertUtils;
+import database.DatabaseAccess;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -47,7 +48,8 @@ public class paymentController implements Initializable {
 
 	@FXML
 	private ChoiceBox<Integer> yearCB;
-
+	
+	
 	@FXML
 	void CompleteTransBtnClicked(ActionEvent event) {
 
@@ -86,12 +88,13 @@ public class paymentController implements Initializable {
 
 		//Card Obj
 		Card card = new Card(cardType, result.toString(), expiryMonth, expiryYear, cvv, name);
-
-		System.out.print(card);
-
-		// Save to DB
-
-		// Show Payment Comfirmed Please Park
+		
+		// Not a good practice to store card details in DB 
+		
+		
+		// Show Payment Confirmed Please Park
+		AlertUtils.showAlertConfirmation("Thank you for purchasing the Pass.");
+		
 
 	}
 

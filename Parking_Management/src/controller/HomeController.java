@@ -18,42 +18,27 @@ public class HomeController {
 	@FXML
 	private Button adminBtn;
 
-	@FXML
-	private Button becomeMemberBtn;
-
-	@FXML
-	private Button membershipBtn;
 
 	@FXML
 	private Button parkAsGuestBtn;
 
 	// Admin Panel
 	@FXML
-	void adminBtn(ActionEvent event) {
-		// setScene(event, "/views/Login.fxml");
+	void adminBtn(ActionEvent event) throws IOException {
 		System.out.print("Admin Panel Button Clicked\n");
+		
+		SceneUtils.setScene(event, "/views/Login.fxml");
 	}
 
-	// Become a Member
-	@FXML
-	void becomeMemberBtn(ActionEvent event) {
-		System.out.print("Become a Member Button Clicked\n");
-	}
-
-	// Membership Holders
-	@FXML
-	void membershipBtn(ActionEvent event) {
-		System.out.print("Memebership Holders Button Clicked\n");
-
-	}
 
 	// Park As Guest
 	@FXML
 	void parkAsGuestBtn(ActionEvent event) throws IOException {
 		System.out.print("Park as Guest Button Clicked\n");
-		//SceneUtils.setScene(event, "/view/GuestParking.fxml");
 		
-		SceneUtils.setScene(event, "/view/Payment.fxml");
+		SceneUtils.setScene(event, "/view/GuestParking.fxml");
+		
+		
 
 	}
 
