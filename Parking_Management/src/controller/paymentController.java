@@ -83,7 +83,6 @@ public class paymentController implements Initializable {
 			result.append(cardNumber.charAt(i));
 		}
 
-		System.out.println(result.toString());
 		System.out.print("\n");
 
 		//Card Obj

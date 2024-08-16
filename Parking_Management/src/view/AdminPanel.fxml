@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.AdminController">
+   <children>
+      <Line endY="465.5" layoutX="250.0" layoutY="158.0" startY="-158.0" />
+      <TableView fx:id="tableV" layoutX="250.0" layoutY="73.0" prefHeight="549.0" prefWidth="551.0">
+        <columns>
+          <TableColumn fx:id="tableColSN" prefWidth="59.99992370605469" text="S.N." />
+          <TableColumn fx:id="tableColVehicle" prefWidth="92.00006103515625" text="Vehicle" />
+            <TableColumn fx:id="tableColMake" prefWidth="75.0" text="Make" />
+            <TableColumn fx:id="tableColModel" prefWidth="67.199951171875" text="Model" />
+            <TableColumn fx:id="tableColPlate" prefWidth="156.0" text="Liscence Plate" />
+            <TableColumn fx:id="tableColStatus" prefWidth="99.199951171875" text="Status" />
+        </columns>
+      </TableView>
+      <Label alignment="CENTER" layoutX="44.0" layoutY="14.0" text="Admin Dashboard" underline="true">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>

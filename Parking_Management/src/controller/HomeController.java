@@ -27,7 +27,8 @@ public class HomeController {
 	void adminBtn(ActionEvent event) throws IOException {
 		System.out.print("Admin Panel Button Clicked\n");
 		
-		SceneUtils.setScene(event, "/views/Login.fxml");
+		//SceneUtils.setScene(event, "/view/Login.fxml");
+		SceneUtils.setScene(event, "/view/AdminPanel.fxml");
 	}
 
 
@@ -35,10 +36,7 @@ public class HomeController {
 	@FXML
 	void parkAsGuestBtn(ActionEvent event) throws IOException {
 		System.out.print("Park as Guest Button Clicked\n");
-		
 		SceneUtils.setScene(event, "/view/GuestParking.fxml");
-		
-		
 
 	}
 
