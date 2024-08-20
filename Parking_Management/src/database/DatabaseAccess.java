@@ -5,11 +5,14 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import model.Card;
 import model.Guest;
+import model.GuestAndVehicleInfo;
 import model.Pass;
 import model.Status;
 import model.Vehicle;
@@ -160,7 +163,7 @@ public class DatabaseAccess {
 	}
 
 	// Status Data (Pass)
-	public ObservableList<Status> loadPassStatus()  {
+	public ObservableList<Status> loadPassStatus() {
 		ObservableList<Status> allStatus = FXCollections.observableArrayList();
 
 		String quertyString = "SELECT passId, startDateTime, validTill FROM pass";
@@ -183,6 +186,161 @@ public class DatabaseAccess {
 
 		return allStatus;
 
+	}
+
+	public GuestAndVehicleInfo searchGuest(String searchString) {
+		GuestAndVehicleInfo guestVehicleInfo = null;
+
+		String query = "SELECT g.name, g.email, g.phone, g.address, v.type, v.make, v.model, v.color, v.licensePlate "
+				+ "FROM Guest g " + "JOIN Vehicle v ON g.id = v.vehicleId "
+				+ "WHERE g.email = ? OR g.phone = ? OR g.id = ?";
+
+		try (Connection conn = DriverManager.getConnection(DB_URL, DB_USERNAME, DB_PASSWORD);
+				PreparedStatement stmt = conn.prepareStatement(query)) {
+
+			stmt.setString(1, searchString); // Set email
+			stmt.setString(2, searchString); // Set phone
+			stmt.setInt(3, parseAsInt(searchString));
+
+			ResultSet rs = stmt.executeQuery();
+
+			if (rs.next()) {
+				String name = rs.getString("name");
+				String email = rs.getString("email");
+				String phone = rs.getString("phone");
+				String address = rs.getString("address");
+				String type = rs.getString("type");
+				String make = rs.getString("make");
+				String model = rs.getString("model");
+				String color = rs.getString("color");
+				String licensePlate = rs.getString("licensePlate");
+
+				guestVehicleInfo = new GuestAndVehicleInfo(name, email, phone, address, type, make, model, color,
+						licensePlate);
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return guestVehicleInfo;
+	}
+
+	// Helper method to parse searchString as an integer
+	private int parseAsInt(String searchString) {
+		try {
+			return Integer.parseInt(searchString);
+		} catch (NumberFormatException e) {
+			return -1; // Return an invalid ID if it cannot be parsed as an integer
+		}
+	}
+
+	// UPDATE GUEST and VEHICLE DETAILS
+	public boolean updateGuestAndVehicleInfo(String searchString, GuestAndVehicleInfo updatedInfo) {
+		String updateGuestQuery = "UPDATE Guest SET name = ?, email = ?, phone = ?, address = ? "
+				+ "WHERE email = ? OR phone = ? OR id = ?";
+		String updateVehicleQuery = "UPDATE Vehicle SET type = ?, make = ?, model = ?, color = ?, licensePlate = ? "
+				+ "WHERE vehicleId = (SELECT id FROM Guest WHERE email = ? OR phone = ? OR id = ?)";
+
+		try (Connection conn = DriverManager.getConnection(DB_URL, DB_USERNAME, DB_PASSWORD)) {
+			// Update Guest Information
+			PreparedStatement guestStmt = conn.prepareStatement(updateGuestQuery);
+			guestStmt.setString(1, updatedInfo.getName());
+			guestStmt.setString(2, updatedInfo.getEmail());
+			guestStmt.setString(3, updatedInfo.getPhone());
+			guestStmt.setString(4, updatedInfo.getAddress());
+			guestStmt.setString(5, searchString); // For email
+			guestStmt.setString(6, searchString); // For phone
+
+			// Handle id separately to avoid NumberFormatException
+			try {
+				int id = Integer.parseInt(searchString);
+				guestStmt.setInt(7, id); // For id
+			} catch (NumberFormatException e) {
+				guestStmt.setNull(7, java.sql.Types.INTEGER); // If not an ID, set to null or handle accordingly
+			}
+
+			guestStmt.executeUpdate();
+
+			// Update Vehicle Information
+			PreparedStatement vehicleStmt = conn.prepareStatement(updateVehicleQuery);
+			vehicleStmt.setString(1, updatedInfo.getType());
+			vehicleStmt.setString(2, updatedInfo.getMake());
+			vehicleStmt.setString(3, updatedInfo.getModel());
+			vehicleStmt.setString(4, updatedInfo.getColor());
+			vehicleStmt.setString(5, updatedInfo.getLicensePlate());
+			vehicleStmt.setString(6, searchString); // For email
+			vehicleStmt.setString(7, searchString); // For phone
+
+			// Handle id separately to avoid NumberFormatException
+			try {
+				int id = Integer.parseInt(searchString);
+				vehicleStmt.setInt(8, id); // For id
+			} catch (NumberFormatException e) {
+				vehicleStmt.setNull(8, java.sql.Types.INTEGER); // If not an ID, set to null or handle accordingly
+			}
+
+			vehicleStmt.executeUpdate();
+
+			return true;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return false;
+	}
+
+	public List<Guest> getAllGuest() {
+		List<Guest> guests = new ArrayList<>();
+		String query = "SELECT id, name, email, phone, address FROM Guest";
+
+		try (Connection conn = DriverManager.getConnection(DB_URL, DB_USERNAME, DB_PASSWORD);
+				PreparedStatement stmt = conn.prepareStatement(query);
+				ResultSet rs = stmt.executeQuery()) {
+
+			while (rs.next()) {
+				int id = rs.getInt("id");
+				String name = rs.getString("name");
+				String email = rs.getString("email");
+				Long phone = rs.getLong("phone");
+				String address = rs.getString("address");
+
+				Guest guest = new Guest(id, name, email, phone, address);
+				guests.add(guest);
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return guests;
+	}
+
+	public List<Vehicle> getAllVehicle() {
+		List<Vehicle> vehicles = new ArrayList<>();
+		String query = "SELECT vehicleId, type, make, model, color, licensePlate FROM Vehicle";
+
+		try (Connection conn = DriverManager.getConnection(DB_URL, DB_USERNAME, DB_PASSWORD);
+				PreparedStatement stmt = conn.prepareStatement(query);
+				ResultSet rs = stmt.executeQuery()) {
+
+			while (rs.next()) {
+				int vehicleId = rs.getInt("vehicleId");
+				String type = rs.getString("type");
+				String make = rs.getString("make");
+				String model = rs.getString("model");
+				String color = rs.getString("color");
+				String licensePlate = rs.getString("licensePlate");
+
+				Vehicle vehicle = new Vehicle(vehicleId, type, make, model, color, licensePlate);
+				vehicles.add(vehicle);
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return vehicles;
 	}
 
 }
