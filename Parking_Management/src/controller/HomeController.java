@@ -27,8 +27,7 @@ public class HomeController {
 	void adminBtn(ActionEvent event) throws IOException {
 		System.out.print("Admin Panel Button Clicked\n");
 		
-		//SceneUtils.setScene(event, "/view/Login.fxml");
-		SceneUtils.setScene(event, "/view/AdminPanel.fxml");
+		SceneUtils.setScene(event, "/view/Login.fxml");
 	}
 
 

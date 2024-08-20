@@ -39,11 +39,11 @@ public class loginController {
 
 		if (da.validateLogin(username, password, adminString)) {
 			System.out.println("Login successful");
-			SceneUtils.setScene(event, "/view/adminPanel");
+			SceneUtils.setScene(event, "/view/AdminPanel.fxml");
+
 		} else {
 			AlertUtils.showAlertError("Invalid Credentials!!!");
 		}
-
 	}
 
 }

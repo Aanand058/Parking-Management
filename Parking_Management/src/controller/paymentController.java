@@ -1,9 +1,11 @@
 package controller;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
 import Utility.AlertUtils;
+import Utility.SceneUtils;
 import database.DatabaseAccess;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -52,7 +54,7 @@ public class paymentController implements Initializable {
 	
 	
 	@FXML
-	void CompleteTransBtnClicked(ActionEvent event) {
+	void CompleteTransBtnClicked(ActionEvent event) throws IOException {
 
 		RadioButton selectedPaymentMethod = (RadioButton) card.getSelectedToggle();
 
@@ -95,7 +97,7 @@ public class paymentController implements Initializable {
 		// Show Payment Confirmed Please Park
 		AlertUtils.showAlertConfirmation("Thank you for purchasing the Pass.");
 		
-		Platform.exit();
+		SceneUtils.setScene(event, "/view/Home.fxml");
 		
 
 	}
