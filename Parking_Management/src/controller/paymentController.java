@@ -5,6 +5,7 @@ import java.util.ResourceBundle;
 
 import Utility.AlertUtils;
 import database.DatabaseAccess;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -93,6 +94,8 @@ public class paymentController implements Initializable {
 		
 		// Show Payment Confirmed Please Park
 		AlertUtils.showAlertConfirmation("Thank you for purchasing the Pass.");
+		
+		Platform.exit();
 		
 
 	}

@@ -55,7 +55,7 @@
             <Font size="18.0" />
          </font>
       </Label>
-      <TextField fx:id="hoursTF" layoutX="474.0" layoutY="74.0" prefHeight="26.0" prefWidth="110.0" />
+      <TextField fx:id="hoursDaysTF" layoutX="474.0" layoutY="74.0" prefHeight="26.0" prefWidth="48.0" />
       <TextField fx:id="emailTF" layoutX="171.0" layoutY="75.0" prefHeight="26.0" prefWidth="203.0" />
       <TextField fx:id="phoneTF" layoutX="171.0" layoutY="113.0" prefHeight="26.0" prefWidth="203.0" />
       <TextField fx:id="addressTF" layoutX="171.0" layoutY="153.0" prefHeight="26.0" prefWidth="203.0" />
@@ -63,7 +63,7 @@
       <TextField fx:id="vModelTF" layoutX="171.0" layoutY="267.0" prefHeight="26.0" prefWidth="203.0" />
       <TextField fx:id="vPlateTF" layoutX="171.0" layoutY="303.0" prefHeight="26.0" prefWidth="203.0" />
       <TextField fx:id="vColorTF" layoutX="171.0" layoutY="339.0" prefHeight="26.0" prefWidth="203.0" />
-      <Label layoutX="474.0" layoutY="36.0" prefHeight="27.0" prefWidth="366.0" text="How many hours you would like to park?">
+      <Label layoutX="474.0" layoutY="36.0" prefHeight="27.0" prefWidth="398.0" text="How many hours/days you would like to park?">
          <font>
             <Font size="18.0" />
          </font>
@@ -76,5 +76,6 @@
          </font>
       </Button>
       <ComboBox fx:id="vType" layoutX="171.0" layoutY="196.0" prefHeight="26.0" prefWidth="203.0" />
+      <ComboBox fx:id="hDChoiceBox" layoutX="530.0" layoutY="74.0" prefHeight="26.0" prefWidth="86.0" />
    </children>
 </AnchorPane>

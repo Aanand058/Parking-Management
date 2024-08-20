@@ -11,6 +11,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import model.Pass;
+import model.Status;
 import model.Vehicle;
 
 public class AdminController implements Initializable{
@@ -24,8 +25,7 @@ public class AdminController implements Initializable{
     @FXML
     private TableColumn<Vehicle, Integer> tableColSN;
 
-    @FXML
-    private TableColumn<Pass, String> tableColStatus;
+ 
 
     @FXML
     private TableColumn<Vehicle, String> tableColVehicle;
@@ -35,6 +35,13 @@ public class AdminController implements Initializable{
 
     @FXML
     private TableView<Vehicle> tableV;
+    
+    
+    @FXML
+    private TableColumn<Status, Long> statusCol;
+
+    @FXML
+    private TableView<Status> statusTV;
     
     private DatabaseAccess da;
 
@@ -54,17 +61,23 @@ public class AdminController implements Initializable{
         tableColModel.setCellValueFactory(new PropertyValueFactory<>("model"));
         tableColPlate.setCellValueFactory(new PropertyValueFactory<>("licensePlate"));
         
-        
-        //Pass Table View Data
-        //tableColStatus.setCellValueFactory(new PropertyValueFactory<>("color"));
-        
-
         // Load data from the database
         ObservableList<Vehicle> vehicles = da.loadVehicleDataFromDB();
-
+        
         // Set the data in the TableView
         tableV.setItems(vehicles);
-		
+        
+        
+        // Pass Table View Data
+        statusCol.setCellValueFactory(new PropertyValueFactory<>("isValid"));
+
+        // Load Pass data from the database
+        ObservableList<Status> passes = da.loadPassStatus();
+
+        // Set the data in the Status TableView
+        statusTV.setItems(passes);
+        
+        		
 	}
     
     

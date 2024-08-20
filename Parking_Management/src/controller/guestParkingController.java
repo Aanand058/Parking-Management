@@ -39,7 +39,7 @@ public class guestParkingController implements Initializable {
 	private TextField emailTF;
 
 	@FXML
-	private TextField hoursTF;
+	private TextField hoursDaysTF;
 
 	@FXML
 	private TextField nameTF;
@@ -76,8 +76,10 @@ public class guestParkingController implements Initializable {
 
 	@FXML
 	private ComboBox<String> vType;
-	
-	
+
+	@FXML
+	private ComboBox<String> hDChoiceBox;
+
 	private DatabaseAccess da;
 
 	public guestParkingController() {
@@ -90,7 +92,7 @@ public class guestParkingController implements Initializable {
 		if (nameTF.getText().isEmpty() || emailTF.getText().isEmpty() || phoneTF.getText().isEmpty()
 				|| vMakeTF.getText().isEmpty() || vColorTF.getText().isEmpty() || vModelTF.getText().isEmpty()
 				|| vPlateTF.getText().isEmpty() || vType.getSelectionModel().getSelectedItem() == null
-				|| hoursTF.getText().isEmpty()) {
+				|| hoursDaysTF.getText().isEmpty()) {
 
 			AlertUtils.showAlertError("Please Enter all the values");
 		} else {
@@ -104,73 +106,81 @@ public class guestParkingController implements Initializable {
 			String vehiclePlate = vPlateTF.getText();
 			String vehicleColor = vColorTF.getText();
 			String vehicleTypeSelected = this.vType.getSelectionModel().getSelectedItem();
-			
-			int hours = Integer.parseInt(hoursTF.getText());
+
+			int hours = 0;
+			String hoursDayString = this.hDChoiceBox.getSelectionModel().getSelectedItem();
+
+			if (hoursDayString == "Hours") {
+				int hdChoice = Integer.parseInt(hoursDaysTF.getText());
+				hours = hdChoice;
+			} else if (hoursDayString == "Days") {
+				int hdChoice = Integer.parseInt(hoursDaysTF.getText());
+				hdChoice = hdChoice * 24;
+				hours = hdChoice;
+
+			}
+
 			Long phone = Long.parseLong(phoneTF.getText());
-			
-			
+
 			boolean isValid = isValidEmail(email);
 
 			if (isValid) {
-				
-				//Common ID
-				int id= generateVehicleId();
-				
+
+				// Common ID
+				int id = generateVehicleId();
+
 				// Guest
 				Guest guest = new Guest(id, name, email, phone, address);
-				//DB
+				// DB
 				boolean g = da.insertGuest(guest);
-				
-				
-				//Vehicle 
-				Vehicle vehicle = new Vehicle(id, vehicleTypeSelected, vehicleMake,vehicleModel,vehicleColor,vehiclePlate.toUpperCase());
-				//DB
+
+				// Vehicle
+				Vehicle vehicle = new Vehicle(id, vehicleTypeSelected, vehicleMake, vehicleModel, vehicleColor,
+						vehiclePlate.toUpperCase());
+				// DB
 				boolean v = da.insertVehicle(vehicle);
-				
-				//Price Calculation Per Hour
+
+				// Price Calculation Per Hour
 				double subtotal = hours * Main.PARKING_PRICE_PER_HOUR;
 				double tax = subtotal * Main.TAX_RATE;
 				double total = subtotal + tax;
-				
+
 				LocalDateTime startDateTime = LocalDateTime.now();
-				//Pass
-				
-				Pass pass = new Pass(id, startDateTime, hours,subtotal, tax,total);
-				//DB
+				// Pass
+
+				Pass pass = new Pass(id, startDateTime, hours, subtotal, tax, total);
+				// DB
 				boolean p = da.insertPass(pass);
-				
-				//Payment Screen
+
+				// Payment Screen
 				SceneUtils.setScene(event, "/view/Payment.fxml");
-				
-				
-				
-				
-				
-				//Pass Confirmed Screen 
-				//SceneUtils.setScene(event, "/view/PassConfirmed.fxml");
-				
+
 			}
 
 		}
 
 	}
-	
-	//5-Digit Number for Vehicle ID
-	  public static int generateVehicleId() {
-	        Random random = new Random();
-	        return 10000 + random.nextInt(90000);
-	    }
+
+	// 5-Digit Number for Vehicle ID
+	public static int generateVehicleId() {
+		Random random = new Random();
+		return 10000 + random.nextInt(90000);
+	}
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
+
 		// Vehicle Choices
 		vType.setItems(FXCollections.observableArrayList("Car", "Bike", "Van", "Truck"));
 
+		// Hours/Days Choices
+		hDChoiceBox.setItems(FXCollections.observableArrayList("Hours", "Days"));
+
 		// Hours Validation
-		hoursTF.setOnKeyTyped(e -> {
+		hoursDaysTF.setOnKeyTyped(e -> {
 			String input = e.getCharacter();
 			if (!input.matches("[0-9]")) {
-				hoursTF.setText("");
+				hoursDaysTF.setText("");
 			}
 		});
 
@@ -178,8 +188,7 @@ public class guestParkingController implements Initializable {
 
 	}
 
-	
-	//Valid REGEX for email
+	// Valid REGEX for email
 	public static boolean isValidEmail(String email) {
 		// Regular expression for a valid email address
 		String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$";

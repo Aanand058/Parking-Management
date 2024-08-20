@@ -11,6 +11,7 @@ import javafx.collections.ObservableList;
 import model.Card;
 import model.Guest;
 import model.Pass;
+import model.Status;
 import model.Vehicle;
 
 public class DatabaseAccess {
@@ -129,35 +130,59 @@ public class DatabaseAccess {
 		}
 		return false;
 	}
-	
-	
-	
-	
-	//Vehicle Data 
-	 public ObservableList<Vehicle> loadVehicleDataFromDB() {
-	        ObservableList<Vehicle> vehicles = FXCollections.observableArrayList();
-	        String query = "SELECT vehicleId, type, make, model, color, licensePlate FROM Vehicle";
 
-	        try (Connection conn = DriverManager.getConnection(DB_URL, DB_USERNAME, DB_PASSWORD);
-	             PreparedStatement stmt = conn.prepareStatement(query);
-	             ResultSet rs = stmt.executeQuery()) {
+	// Vehicle Data
+	public ObservableList<Vehicle> loadVehicleDataFromDB() {
+		ObservableList<Vehicle> vehicles = FXCollections.observableArrayList();
 
-	            while (rs.next()) {
-	                int vehicleId = rs.getInt("vehicleId");
-	                String type = rs.getString("type");
-	                String make = rs.getString("make");
-	                String model = rs.getString("model");
-	                String color = rs.getString("color");
-	                String licensePlate = rs.getString("licensePlate");
+		String query = "SELECT vehicleId, type, make, model, color, licensePlate FROM Vehicle";
 
-	                Vehicle vehicle = new Vehicle(vehicleId, type, make, model, color, licensePlate);
-	                vehicles.add(vehicle);
-	            }
-	        } catch (SQLException e) {
-	            e.printStackTrace();
-	        }
+		try (Connection conn = DriverManager.getConnection(DB_URL, DB_USERNAME, DB_PASSWORD);
+				PreparedStatement stmt = conn.prepareStatement(query);
+				ResultSet rs = stmt.executeQuery()) {
 
-	        return vehicles;
-	    }
+			while (rs.next()) {
+				int vehicleId = rs.getInt("vehicleId");
+				String type = rs.getString("type");
+				String make = rs.getString("make");
+				String model = rs.getString("model");
+				String color = rs.getString("color");
+				String licensePlate = rs.getString("licensePlate");
+
+				Vehicle vehicle = new Vehicle(vehicleId, type, make, model, color, licensePlate);
+				vehicles.add(vehicle);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return vehicles;
+	}
+
+	// Status Data (Pass)
+	public ObservableList<Status> loadPassStatus()  {
+		ObservableList<Status> allStatus = FXCollections.observableArrayList();
+
+		String quertyString = "SELECT passId, startDateTime, validTill FROM pass";
+
+		try (Connection connection = DriverManager.getConnection(DB_URL, DB_USERNAME, DB_PASSWORD);
+				PreparedStatement stmt = connection.prepareStatement(quertyString);
+				ResultSet rs = stmt.executeQuery(quertyString)) {
+
+			while (rs.next()) {
+				int passId = rs.getInt("passId");
+				String startDateTime = rs.getString("startDateTime");
+				String validTill = rs.getString("validTill");
+
+				Status s = new Status(passId, startDateTime, validTill);
+				allStatus.add(s);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return allStatus;
+
+	}
 
 }
