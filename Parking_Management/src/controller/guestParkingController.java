@@ -18,6 +18,7 @@ import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
@@ -147,11 +148,13 @@ public class guestParkingController implements Initializable {
 
 				LocalDateTime startDateTime = LocalDateTime.now();
 				// Pass
-
 				Pass pass = new Pass(id, startDateTime, hours, subtotal, tax, total);
 				// DB
 				boolean p = da.insertPass(pass);
 
+				 // Show Pass Details in a Dialog
+	            showPassDetailsDialog(pass);
+	            
 				// Payment Screen
 				SceneUtils.setScene(event, "/view/Payment.fxml");
 
@@ -161,6 +164,22 @@ public class guestParkingController implements Initializable {
 
 	}
 
+	// Method to show a dialog box with the pass details
+	private void showPassDetailsDialog(Pass pass) {
+	    Alert alert = new Alert(Alert.AlertType.INFORMATION);
+	    alert.setTitle("Pass Details");
+	    alert.setHeaderText("Pass Information");
+	    alert.setContentText(
+	            "Pass ID: " + pass.getId() + "\n" +
+	            "Start DateTime: " + pass.getStartDateTime() + "\n" +
+	            "Hours: " + pass.getHours() + "\n" +
+	            "Tax: $" + String.format("%.2f", pass.getTax()) + "\n" +
+	            "Total: $" + String.format("%.2f", pass.getTotal())
+	    );
+
+	    alert.showAndWait();
+	}
+	
 	// 5-Digit Number for Vehicle ID
 	public static int generateVehicleId() {
 		Random random = new Random();
